@@ -19,7 +19,7 @@ namespace Coding_Theory
             while (getVector)
             {
                 Console.WriteLine("Iveskite dvejetaini vektoriu: Pvz. 010010");
-                // Ivedamas vektorius
+                // Įvedamas vektorius
                 string givenVector = Console.ReadLine();
                 // patikrinamas vektoriaus tinkamumas
                 if (Regex.IsMatch(givenVector, "^[01]+$"))

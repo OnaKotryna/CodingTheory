@@ -8,7 +8,7 @@ namespace Coding_Theory
 {
     class ConvEncoder
     {
-        int[] memoryBlocks = new int[6] { 0, 0, 0, 0, 0, 0 }; // kodo būsena (stumiamojo registro atiminties turinys 26 psl.)
+        int[] memoryBlocks = new int[6] { 0, 0, 0, 0, 0, 0 }; // Kodo būsena (stumiamojo registro atiminties turinys 26 psl.)
 
         // Vektoriaus kodavimas sasukos kodu [Ber84, §15.62, p.390, fig. 15.10]
         // Įeities parametrai: vartotojo įvestas vektorius
@@ -16,7 +16,7 @@ namespace Coding_Theory
         public int[] Encode(int[] vector)
         {
             int[] vectorToCode = new int[vector.Length + 6];
-            // Vektorius papildomas šešiais 0 tam, kad kodavimo pabaigoje išsivalytų atminties registrai
+            // Vektorius papildomas šešiais 0 tam, kad kodavimo pabaigoje išsivalytų atminties blokai
             foreach(int element in vectorToCode)
             {
                 vectorToCode[element] = 0;
@@ -34,14 +34,12 @@ namespace Coding_Theory
             // Vektoriaus bitų kodavimas dviem simboliais
             for(int i = 0; i < vectorToCode.Length; i++)
             {
-                // pirmas simbolis - į regstrą įėjęs bitas
+                // Pirmas simbolis - į regstrą įėjęs bitas
                 encodedVector[j] = vectorToCode[i];
                 j++;
-                // Console.WriteLine("Koduojamas bitas: " + vectorToCode[i]);
-                // antras simbolis - į registrą įėjęs bitas susumuotas su atitinkamais atminties registro blokais (2, 5, 6)
+                // Antras simbolis - į registrą įėjęs bitas susumuotas su atitinkamais atminties registro blokais (2, 5, 6)
                 encodedVector[j] = CountSecondBit(vectorToCode[i]);
                 j++;
-                // Console.WriteLine(String.Format("{0} bitas užkodutas {1}{2}", vectorToCode[i], encodedVector[j-2], encodedVector[j-1]));
             }
 
             return encodedVector;
@@ -52,13 +50,7 @@ namespace Coding_Theory
         // Grąžinama: apskaičiotas užkoduotas bitas
         private int CountSecondBit(int bit)
         {
-            /*Console.Write("Atminties blokai bituko skaiciavimo laiko momentu: ");
-            foreach (int block in memoryBlocks)
-            {
-                Console.Write(block + " ");
-            }
-            Console.Write("\n");*/
-            // suskaičiuojama antro simbolio reikšmė [Ber84, §15.62, p. 389–390]
+            // Suskaičiuojama antro simbolio reikšmė [Ber84, §15.62, p. 389–390]
             int countedBit = (bit + memoryBlocks[1] + memoryBlocks[4] + memoryBlocks[5])%2; // 2, 5, 6 atminties blokai + iejes bitukas
             // perstumiamos atminties blokų reikšmės
             for(int i = 5; i > 0; i--)

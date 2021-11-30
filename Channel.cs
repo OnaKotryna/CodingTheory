@@ -12,12 +12,13 @@ namespace Coding_Theory
         Random random = new Random();
 
         // Sukuriamas kanalas su duota klaidos tikimybe
+        // Įeities parametrai: klaidos tikimybė
         public Channel(double probability)
         {
             this.probability = probability;
         }
 
-        // Siutnimo kanalu realizacija. imituojamas užkoduoto kodo siuntimas kanalu
+        // Siutnimo kanalu realizacija. Imituojamas užkoduoto kodo siuntimas kanalu
         // Įeities parametrai: užkoduotas kodas
         // Grąžinama: kanalu persiųstas iškraipytas kodas
         public int[] SendCode(int[] encodedCode)
@@ -31,7 +32,7 @@ namespace Coding_Theory
                 // Jei a mažesnis už klaidos tikimybę pe, siunčiamą elementą kanalas turi iškraipyti, jei ne - neturi. 
                 if (randomValue < probability)
                 {
-                    // iškraipymas
+                    // Iškraipymas
                     if (encodedCode[i] == 0)
                         distortedCode[i] = 1;
                     else

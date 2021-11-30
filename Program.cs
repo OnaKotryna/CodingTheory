@@ -11,7 +11,7 @@ namespace Coding_Theory
         {
             Console.WriteLine("Užduotis A15");
 
-            double probabilityNumber = 0;
+            double probabilityNumber = 0.3;
             bool getProbability = true;
 
             // Klaidos tikimybes ivedimas
@@ -31,12 +31,17 @@ namespace Coding_Theory
             }
 
             // Scenarijaus pasirinkimas
-            /*Console.WriteLine("Pasirinkite scenarijų:\n1 - Vektoriaus siuntimas"); // \n2 - teksto siuntmas\n3 - paveiksliuko siuntimas
+            Console.WriteLine("Pasirinkite scenarijų:\n1 - Vektoriaus siuntimas\n0 - Baigti darba"); // \n2 - teksto siuntmas\n3 - paveiksliuko siuntimas
             int selected = Int32.Parse(Console.ReadLine());
+            int[] vector = new int[] { };
+
             switch (selected)
             {
+                case 0:
+                    Environment.Exit(0);
+                    break;
                 case 1:
-                    SelectionHandler.HandleVector();
+                    vector = SelectionHandler.HandleVector();
                     break;
                 case 2:
                     break;
@@ -45,17 +50,18 @@ namespace Coding_Theory
                 default:
                     Console.WriteLine("pasirinkimas nerastas");
                     break;
-            }*/
+            }
+            
 
-            int[] vector = SelectionHandler.HandleVector();
-            //int[] vector = new int[] { 1, 0, 1, 1 };
+            //int[] vector = SelectionHandler.HandleVector();
+           //int[] vector = new int[] { 1, 1, 0, 1, 0 };
             Console.WriteLine("Ivestas vektorius:");
             PrintCodeVector(vector);
 
-            // KODAVIMO VIETA
-
+            // KODAVIMAS
             ConvEncoder encoder = new ConvEncoder();
             int[] encodedVector = encoder.Encode(vector);
+
             Console.WriteLine("Uzkoduotas vektorius:");
             PrintCodeVector(encodedVector);
 
@@ -69,8 +75,8 @@ namespace Coding_Theory
             // Pranešama, kiek ir kuriose pozicijose įvyko klaidų
             List<int> errors = channel.GetErrorsAndPositions(distortedCode, encodedVector);
             Console.WriteLine("Padarytos klaidos:");
-            Console.WriteLine("Klaidu kiekis: " + errors.Count);
-            Console.Write("Klaidu pozicijos: ");
+            Console.WriteLine("  Klaidu kiekis: " + errors.Count);
+            Console.Write("  Klaidu pozicijos: ");
             foreach (int i in errors)
             {
                 Console.Write(i + " ");
@@ -80,17 +86,18 @@ namespace Coding_Theory
             // Klaidų redagavimas pagal vartotojo pateiktas pozicijas
             Console.WriteLine("Ar taisyti klaidas? y/n");
             string resolveAnswer = Console.ReadLine();
+
             while (resolveAnswer.StartsWith('y'))
             {
                 Console.WriteLine("Iveskite klaidos pozicija:");
-                // ivedama klaidos pozicija
+                // Įvedama klaidos pozicija
                 int position = Convert.ToInt32(Console.ReadLine());
-                // patikrinama ar vartotojo irasyta pozicija priklauso vektoriui
+                // Patikrinama, ar vartotojo įrasyta pozicija priklauso vektoriui
                 if (position < distortedCode.Length && position >= 0)
                 {
-                    // taisomas elementas nurodytoje pozicijoje
+                    // Taisomas elementas nurodytoje pozicijoje
                     distortedCode = channel.ResolveErrorByHand(distortedCode, position);
-                    // darbo tesimui kiek norima kartu
+                    // Darbo tesimui kiek norima kartų
                     Console.WriteLine("Testi taisyma? y/n");
                     resolveAnswer = Console.ReadLine();
                 }
@@ -100,14 +107,19 @@ namespace Coding_Theory
                 }
             }
 
-            // DEKODAVIMO VIETA  tbd
-
-
+            // DEKODAVIMAS
+            ConvDecoder convDecoder = new ConvDecoder();
+            int[] decodedVector = convDecoder.Decode(distortedCode);
 
             // Atspausdinamas rezultatas
-            PrintCodeVector(distortedCode);
+            Console.WriteLine("Dekoduotas rezultatas:");
+            PrintCodeVector(decodedVector);
+
         }
 
+        // Vektoriaus spausdinimas 
+        // Įeities parametrai: vektorius, kuris bus spausdinamas
+        // Grąžinama: nieko
         static private void PrintCodeVector(int[] code)
         {
             foreach (int e in code)
