@@ -61,7 +61,7 @@ namespace Coding_Theory
             return errors;
         }
 
-        // Mechaninis vartotojo klaidu taisymas
+        // Vartotojo nurodytos norimos taisyti pozicijos taiymo metodas
         // Įeities parametrai: taisomas vektorius, norima pataisyti pozicija
         // Grąžinama: pataisytas vektorius
         public int[] ResolveErrorByHand(int[] distortedCode, int position)
@@ -78,6 +78,5 @@ namespace Coding_Theory
             return distortedCode;
         }
      
-
     }
 }
