@@ -48,25 +48,30 @@ namespace Coding_Theory
             }*/
 
             int[] vector = SelectionHandler.HandleVector();
+            //int[] vector = new int[] { 1, 0, 1, 1 };
             Console.WriteLine("Ivestas vektorius:");
             PrintCodeVector(vector);
 
-            //Console.WriteLine("Uzkoduotas vektorius"); //tbd
+            // KODAVIMO VIETA
 
-            // KODAVIMO VIETA tbd
+            ConvEncoder encoder = new ConvEncoder();
+            int[] encodedVector = encoder.Encode(vector);
+            Console.WriteLine("Uzkoduotas vektorius:");
+            PrintCodeVector(encodedVector);
 
+            // SIUNTIMAS KANALU
             Channel channel = new Channel(probabilityNumber);
-            int[] distortedCode = channel.SendCode(vector);
+            int[] distortedCode = channel.SendCode(encodedVector);
 
             Console.WriteLine("Kanalu persiustas vektorius:");
             PrintCodeVector(distortedCode);
 
             // Pranešama, kiek ir kuriose pozicijose įvyko klaidų
-            List<int> errors = channel.GetErrorsAndPositions(distortedCode, vector);
+            List<int> errors = channel.GetErrorsAndPositions(distortedCode, encodedVector);
             Console.WriteLine("Padarytos klaidos:");
             Console.WriteLine("Klaidu kiekis: " + errors.Count);
             Console.Write("Klaidu pozicijos: ");
-            foreach(int i in errors)
+            foreach (int i in errors)
             {
                 Console.Write(i + " ");
             }
@@ -75,13 +80,13 @@ namespace Coding_Theory
             // Klaidų redagavimas pagal vartotojo pateiktas pozicijas
             Console.WriteLine("Ar taisyti klaidas? y/n");
             string resolveAnswer = Console.ReadLine();
-            while(resolveAnswer.StartsWith('y'))
+            while (resolveAnswer.StartsWith('y'))
             {
                 Console.WriteLine("Iveskite klaidos pozicija:");
                 // ivedama klaidos pozicija
                 int position = Convert.ToInt32(Console.ReadLine());
                 // patikrinama ar vartotojo irasyta pozicija priklauso vektoriui
-                if(position < distortedCode.Length && position >= 0)
+                if (position < distortedCode.Length && position >= 0)
                 {
                     // taisomas elementas nurodytoje pozicijoje
                     distortedCode = channel.ResolveErrorByHand(distortedCode, position);
@@ -96,6 +101,8 @@ namespace Coding_Theory
             }
 
             // DEKODAVIMO VIETA  tbd
+
+
 
             // Atspausdinamas rezultatas
             PrintCodeVector(distortedCode);

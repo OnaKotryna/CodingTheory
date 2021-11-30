@@ -18,7 +18,7 @@ namespace Coding_Theory
             int[] vector = new int[] { };
             while (getVector)
             {
-                Console.WriteLine("Iveskite dvejetaini vektoriu: \nPvz. 010010");
+                Console.WriteLine("Iveskite dvejetaini vektoriu: Pvz. 010010");
                 // Ivedamas vektorius
                 string givenVector = Console.ReadLine();
                 // patikrinamas vektoriaus tinkamumas
@@ -39,10 +39,7 @@ namespace Coding_Theory
                 
             }
 
-            Console.WriteLine("Siunciama kodavimui:'))");
             return vector;
-
-            // Console.WriteLine("Uzkoduotas ivestas vektorius:");
         }
 
     }
