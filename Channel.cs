@@ -10,13 +10,11 @@ namespace Coding_Theory
     {
         private double probability;
         Random random = new Random();
-        
 
         // Sukuriamas kanalas su duota klaidos tikimybe
         public Channel(double probability)
         {
             this.probability = probability;
-
         }
 
         // Siutnimo kanalu realizacija. imituojamas užkoduoto kodo siuntimas kanalu
@@ -53,8 +51,7 @@ namespace Coding_Theory
         public List<int> GetErrorsAndPositions(int[] distortedCode, int[] originalCode)
         {
             List<int> errors = new List<int>();
-
-            for (int i = 0; i < distortedCode.Length; i++)
+            for (int i = 0; i < originalCode.Length; i++)
             {
                 if(distortedCode[i] != originalCode[i])
                 {
@@ -64,6 +61,23 @@ namespace Coding_Theory
             return errors;
         }
 
+        // Mechaninis vartotojo klaidu taisymas
+        // Įeities parametrai: taisomas vektorius, norima pataisyti pozicija
+        // Grąžinama: pataisytas vektorius
+        public int[] ResolveErrorByHand(int[] distortedCode, int position)
+        {
+            switch (distortedCode[position])
+            {
+                case 0:
+                    distortedCode[position] = 1;
+                    break;
+                case 1:
+                    distortedCode[position] = 0;
+                    break;
+            }
+            return distortedCode;
+        }
      
+
     }
 }
