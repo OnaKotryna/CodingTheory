@@ -11,18 +11,21 @@ namespace Coding_Theory
     {
 
         // Ivedamas vartotojo vektorius
-        // ir siunciamas kodavimui
-        public static void HandleVector()
+        // ir sis siunciamas kodavimui
+        public static int[] HandleVector()
         {
             bool getVector = true;
-            int[] vector;
+            int[] vector = new int[] { };
             while (getVector)
             {
                 Console.WriteLine("Iveskite dvejetaini vektoriu: \nPvz. 010010");
+                // Ivedamas vektorius
                 string givenVector = Console.ReadLine();
+                // patikrinamas vektoriaus tinkamumas
                 if (Regex.IsMatch(givenVector, "^[01]+$"))
                 {
                     vector = new int[givenVector.Length];
+                    //paruosiamas vektorius kodavimui (is string verciama i int)
                     for (int i = 0; i < givenVector.Length; i++)
                     {
                         vector[i] = Convert.ToInt32(givenVector[i].ToString());
@@ -33,7 +36,13 @@ namespace Coding_Theory
                 {
                     Console.WriteLine("\nVektorius nera dvejetainis\n");
                 }
+                
             }
+
+            Console.WriteLine("Siunciama kodavimui:'))");
+            return vector;
+
+            // Console.WriteLine("Uzkoduotas ivestas vektorius:");
         }
 
     }
