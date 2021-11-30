@@ -19,9 +19,9 @@ namespace Coding_Theory
 
         }
 
-        // Kanalo realizacija. imituojamas užkoduoto kodo siuntimas kanalu
-        // Parametrai: užkoduotas kodas
-        // Grąžinama: kanalo siuntime iškraipytas kodas
+        // Siutnimo kanalu realizacija. imituojamas užkoduoto kodo siuntimas kanalu
+        // Įeities parametrai: užkoduotas kodas
+        // Grąžinama: kanalu persiųstas iškraipytas kodas
         public int[] SendCode(int[] encodedCode)
         {
             int[] distortedCode = new int[encodedCode.Length];
@@ -45,6 +45,23 @@ namespace Coding_Theory
                 }
             }
             return distortedCode;
+        }
+
+        // Skaičiuojamas klaidų kiekis ir jų pozicijos
+        // Įeities parametrai: kanalu persiųstas iškraipytas kodas ir kanalu siųstas pirminis užkoduotas kodas
+        // Grąžinama: sąrašas su klaidų pozicijomis
+        public List<int> GetErrorsAndPositions(int[] distortedCode, int[] originalCode)
+        {
+            List<int> errors = new List<int>();
+
+            for (int i = 0; i < distortedCode.Length; i++)
+            {
+                if(distortedCode[i] != originalCode[i])
+                {
+                    errors.Add(i);
+                }
+            }
+            return errors;
         }
 
      
