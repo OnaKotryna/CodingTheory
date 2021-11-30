@@ -8,37 +8,32 @@ namespace Coding_Theory
 {
     class ConvDecoder
     {
-        int[] memoryBlocks = new int[6] { 0, 0, 0, 0, 0, 0 }; // kodo būsena (stumiamojo registro atiminties turinys 26 psl.)
+        // Atminties blokų schemos
+        private int[] memoryBlocks = new int[6] { 0, 0, 0, 0, 0, 0 }; 
+        private int[] errorFixMemoryBlocks = new int[6] { 0, 0, 0, 0, 0, 0 };
 
-        int[] errorFixMemoryBlocks = new int[6] { 0, 0, 0, 0, 0, 0 };
-
-        // Vektoriaus dekodavimas sasukos kodu [Ber84, §15.63, p.391, fig. 15.11]
-        // Įeities parametrai: užkoduotas vektorius
-        // Grąžinama: dekoduotas vektorius
+        // Dekodavimas sasukos kodu [Ber84, §15.63, p.391, fig. 15.11]
+        // Įeities parametrai: užkoduotas vektorius (kodas)
+        // Grąžinama: dekoduotas vektorius (kodas)
         public int[] Decode(int[] encodedCode)
         {
-            int[] decodedCode = new int[encodedCode.Length];
+            int[] fullDecodedCode = new int[encodedCode.Length];
             int j = 0;
 
+            // Kiekvienos bitų poros dekodavimas į vieną bitą
             for(int i = 0; i < encodedCode.Length; i += 2)
             {
                 int firstBit = encodedCode[i];
                 int secondBit = encodedCode[i + 1];
-                Console.Write("Dekoduojami bitai: " + firstBit + secondBit+" ");
                 int decodedBit = DecodeBits(firstBit, secondBit);
-                decodedCode[j] = decodedBit;
+                fullDecodedCode[j] = decodedBit;
                 j++;
             }
-
-            int[] finalDecodedCode = new int[decodedCode.Length / 2 - 6];
-            j = 0;
-            for(int i = 6; i < decodedCode.Length / 2; i++)
-            {
-                finalDecodedCode[j] = decodedCode[i];
-                j++;
-            }
-
-            return finalDecodedCode;
+            
+            // Gaunamas sutvarkytas dekoduotas vektorius (kodas) (dekoderio būsenos bitų pašalinimas)
+            int[] decodedCode = FixDecodedCode(fullDecodedCode);
+            
+            return decodedCode;
         }
 
         // Bitų porų dekodavimas į vieną bitą
@@ -55,57 +50,55 @@ namespace Coding_Theory
             mdeSyndrome[2] = errorFixMemoryBlocks[3];
             mdeSyndrome[3] = errorFixMemoryBlocks[5];
 
-            Console.Write("  MDE: ");
-            foreach (int digit in mdeSyndrome)
-            {
-                Console.Write(digit + " ");
-            }
-
-            Console.Write("  Apatine: ");
-            foreach (int block in errorFixMemoryBlocks)
-            {
-                Console.Write(block + " ");
-            }
-            // perstatomi apatines schemos registrai 
+            // Perstatomos apatinės schemos atminties blokų reikšmės
             for (int i = 5; i > 0; i--)
             {
                 errorFixMemoryBlocks[i] = errorFixMemoryBlocks[i - 1];
             }
-            // surasta esamo laiko momento atitinkamų atminties blokų bei įėjusių simbolių suma įrašoma į apatinę schemą
+            // Surasta esamo laiko momento atitinkamų atminties blokų bei įėjusių simbolių suma įrašoma į apatinę schemą
             errorFixMemoryBlocks[0] = bitForErrorFix;
 
-            
-
+            // Surandamas MDE sprendimo bitas (MDE rezultatas)
             int bitValueForError = GetErrorDecision(mdeSyndrome);
             int decodedBit = (bitValueForError + memoryBlocks[5]) % 2;
 
-            Console.Write(String.Format("   MDE: {0}   Dekoduotas bitas {1}\n", bitValueForError, decodedBit));
-
-            Console.Write("Virsutine: ");
-            foreach (int block in memoryBlocks)
-            {
-                Console.Write(block + " ");
-            }
-            //Console.Write("\n");
+            // Perstatomos viršutinės schemos atminties blokų reikšmės
             for (int i = 5; i > 0; i--)
             {
                 memoryBlocks[i] = memoryBlocks[i - 1];
             }
-            // pirmas poros simbolis keliauja i virsutine schema
+            // Pirmas poros simbolis įrašomas į viršutinę schemą
             memoryBlocks[0] = firstBit;
 
             return decodedBit;
         }
 
+        // MDE rezultato suradimas
+        // Įeities parametrai: 4 MDE bitai
+        // Grąžinama: vienas bitas, taisantis klaidą
         private int GetErrorDecision(int[] mdeSyndrome)
         {
             int sumOfSyndrome = mdeSyndrome[0] + mdeSyndrome[1] + mdeSyndrome[2] + mdeSyndrome[3];
-            Console.Write("suma " + sumOfSyndrome);
             if (sumOfSyndrome >= 3)
             {
                 return 1;
             }
             return 0;
+        }
+
+        // Pašalinami dekoderio būsenos bitai
+        // Įeities parametrai: dekoduotas vektorius (kodas)
+        // Grąžinama: dekoduotas vektorius (kodas) be dekoderio būsenos bitų
+        private int[] FixDecodedCode(int[] decodedCode)
+        {
+            int[] fixedCode = new int[decodedCode.Length / 2 - 6];
+            int j = 0;
+            for (int i = 6; i < decodedCode.Length / 2; i++)
+            {
+                fixedCode[j] = decodedCode[i];
+                j++;
+            }
+            return fixedCode;
         }
     }
 }
