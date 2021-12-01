@@ -34,7 +34,7 @@ namespace Coding_Theory
             string selected = "notChosen"; 
             while (!selected.Equals("0"))
             {
-                Console.WriteLine("Pasirinkite scenarijų:\n1 - Vektoriaus siuntimas\n2 - teksto siuntimas\n0 - Baigti darba"); // \n3 - paveiksliuko siuntimas
+                Console.WriteLine("Pasirinkite scenarijų:\n1 - Vektoriaus siuntimas\n2 - Teksto siuntimas\n0 - Baigti darba");
                 selected = Console.ReadLine();
                 switch (selected)
                 {
@@ -46,8 +46,6 @@ namespace Coding_Theory
                         break;
                     case "2":
                         ScenarioHandler.HandleScenarioTwo(probabilityNumber);
-                        break;
-                    case "3":
                         break;
                     default:
                         Console.WriteLine("Pasirinkimas nerastas. Bandykite dar kartą.");

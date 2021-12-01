@@ -44,10 +44,9 @@ namespace Coding_Theory
             Console.Write("\n");
 
             // Klaidų redagavimas pagal vartotojo pateiktas pozicijas
-            Console.WriteLine("Ar taisyti klaidas? y/n");
+            Console.WriteLine("Ar taisyti klaidas? t/n");
             string resolveAnswer = Console.ReadLine();
-
-            while (resolveAnswer.StartsWith('y'))
+            while (resolveAnswer.StartsWith('t'))
             {
                 Console.WriteLine("Iveskite klaidos pozicija:");
                 // Įvedama klaidos pozicija
@@ -60,7 +59,7 @@ namespace Coding_Theory
                     // Darbo tesimui kiek norima kartų
                     Console.WriteLine("Rankiniu budu pataisytas vektorius:");
                     PrintCodeVector(distortedCode);
-                    Console.WriteLine("Testi taisyma? y/n");
+                    Console.WriteLine("Testi taisyma? t/n");
                     resolveAnswer = Console.ReadLine();
                 }
                 else
@@ -105,13 +104,6 @@ namespace Coding_Theory
             string decodedText = string.Join("", decodedTextVector);
             Console.WriteLine(InputHandler.BinaryToString(decodedText));
 
-        }
-
-        // apdorojamas trečias scenarijus - naudotojas įkelia paveiksliuką
-        // Įeities parametrai: klaidos tikimybė
-        public static void HandleScenarioThree()
-        {
-            // tbd
         }
 
         // Vektoriaus bitų spausdinimas 

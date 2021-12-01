@@ -35,13 +35,12 @@ namespace Coding_Theory
                 {
                     Console.WriteLine("\nVektorius nera dvejetainis\n");
                 }
-                
             }
 
             return vector;
         }
 
-        // Apdoroja naudotojo tkesto įvedimą ir tkestą paverčia vektoriumi 
+        // Apdoroja naudotojo teksto įvedimą ir tekstą paverčia vektoriumi 
         // Grąžinama: įvestas naudotojo tekstas paverstas bitų srautu
         public static int[] HandleText()
         {
@@ -93,6 +92,5 @@ namespace Coding_Theory
         }
 
     }
-
-    
+   
 }
