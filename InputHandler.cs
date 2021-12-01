@@ -53,18 +53,14 @@ namespace Coding_Theory
             {
                 giventext = giventext + line + '\n';
             }
-            
+            // tekstas paverčiamas į bitų seką
             string binaryText = StringToBinary(giventext);
-
             int[] vector = new int[binaryText.Length];
-
             for (int i = 0; i < binaryText.Length; i++)
             {
                 vector[i] = Convert.ToInt32(binaryText[i].ToString());
             }
 
-            string binaryToText = BinaryToString(binaryText);
-            
             return vector;
         }
 
