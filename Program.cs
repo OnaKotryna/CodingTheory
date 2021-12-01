@@ -11,11 +11,11 @@ namespace Coding_Theory
         {
             Console.WriteLine("Užduotis A15");
 
-            double probabilityNumber = 0.3;
+            double probabilityNumber = 0;
             bool getProbability = true;
 
             // Klaidos tikimybes ivedimas
-            while (getProbability)
+            /*while (getProbability)
             {
                 Console.WriteLine("Nurodykite klaidos tikimybę:");
                 string givenProbability = Console.ReadLine();
@@ -28,22 +28,47 @@ namespace Coding_Theory
                 {
                     Console.WriteLine("Klaida tikimybės nurodyme.", givenProbability);
                 }
-            }
+            }*/
 
             // Scenarijaus pasirinkimas
-            Console.WriteLine("Pasirinkite scenarijų:\n1 - Vektoriaus siuntimas\n0 - Baigti darba"); // \n2 - teksto siuntmas\n3 - paveiksliuko siuntimas
+            Console.WriteLine("Pasirinkite scenarijų:\n1 - Vektoriaus siuntimas\n2 - teksto siuntimas\n0 - Baigti darba"); // \n3 - paveiksliuko siuntimas
             int selected = Int32.Parse(Console.ReadLine());
             int[] vector = new int[] { };
-
             switch (selected)
             {
                 case 0:
                     Environment.Exit(0);
                     break;
                 case 1:
-                    vector = SelectionHandler.HandleVector();
+                    vector = InputHandler.HandleVector();
                     break;
                 case 2:
+                    int[] textVector;
+                    textVector = InputHandler.HandleText();
+
+                    /*Console.WriteLine("%vesto teksto vektorius: ");
+                    PrintCodeVector(textVector);*/
+
+                    Channel textChannel = new Channel(0.0);
+                    int[] textVectorFromChannel = textChannel.SendCode(textVector);
+
+                    Console.WriteLine("Kanalu persiustas teksto vektorius:");
+                    string result = string.Join("", textVectorFromChannel);
+                    Console.WriteLine(InputHandler.BinaryToString(result));
+
+
+                    ConvEncoder encoderText = new ConvEncoder();
+                    int[] encodedTextVector = encoderText.Encode(textVector);
+
+                    int[] encodedTextVectorFromChannel = textChannel.SendCode(encodedTextVector);
+
+                    ConvDecoder decoder = new ConvDecoder();
+                    int[] decodedTextVector = decoder.Decode(encodedTextVectorFromChannel);
+
+                    Console.WriteLine("Dekoduotas kanalu persiustas tekstas:");
+                    string decodedText = string.Join("", decodedTextVector);
+                    Console.WriteLine(InputHandler.BinaryToString(decodedText));
+
                     break;
                 case 3:
                     break;
@@ -51,7 +76,10 @@ namespace Coding_Theory
                     Console.WriteLine("pasirinkimas nerastas");
                     break;
             }
+            //int[] vector;
             
+
+            Environment.Exit(0);
 
             //int[] vector = SelectionHandler.HandleVector();
            //int[] vector = new int[] { 1, 1, 0, 1, 0 };
@@ -114,6 +142,19 @@ namespace Coding_Theory
             // Atspausdinamas rezultatas
             Console.WriteLine("Dekoduotas rezultatas:");
             PrintCodeVector(decodedVector);
+
+
+            bool exitFlag = false;
+            do
+            {
+                Console.WriteLine("Norėdami iseiti, spauskite 0");
+                int action = Convert.ToInt32(Console.ReadLine());
+                if(action == 0)
+                {
+                    exitFlag = true;
+                }
+            } while (!exitFlag);
+
 
         }
 
