@@ -54,17 +54,5 @@ namespace Coding_Theory
             }
 
         }
-
-        // Vektoriaus spausdinimas 
-        // Įeities parametrai: vektorius, kuris bus spausdinamas
-        // Grąžinama: nieko
-        static private void PrintCodeVector(int[] code)
-        {
-            foreach (int e in code)
-            {
-                Console.Write(e + " ");
-            }
-            Console.Write("\n");
-        }
     }
 }

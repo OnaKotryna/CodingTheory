@@ -33,7 +33,7 @@ namespace Coding_Theory
             PrintCodeVector(distortedCode);
 
             // Pranešama, kiek ir kuriose pozicijose įvyko klaidų
-            List<int> errors = channel.GetErrorsAndPositions(distortedCode, encodedVector);
+            List<int> errors = ErrorHandler.GetErrorsAndPositions(distortedCode, encodedVector);
             Console.WriteLine("Padarytos klaidos:");
             Console.WriteLine("  Klaidu kiekis: " + errors.Count);
             Console.Write("  Klaidu pozicijos: ");
@@ -55,7 +55,7 @@ namespace Coding_Theory
                 if (position < distortedCode.Length && position >= 0)
                 {
                     // Taisomas elementas nurodytoje pozicijoje
-                    distortedCode = channel.ResolveErrorByHand(distortedCode, position);
+                    distortedCode = ErrorHandler.ResolveErrorByHand(distortedCode, position);
                     // Darbo tesimui kiek norima kartų
                     Console.WriteLine("Rankiniu budu pataisytas vektorius:");
                     PrintCodeVector(distortedCode);
