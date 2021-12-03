@@ -14,7 +14,7 @@ namespace Coding_Theory
             double probabilityNumber = 0;
             bool getProbability = true;
 
-            // Klaidos tikimybes ivedimas
+            // Klaidos tikimybės įvedimas
             while (getProbability)
             {
                 Console.WriteLine("Nurodykite klaidos tikimybę:");
@@ -26,7 +26,7 @@ namespace Coding_Theory
                 }
                 else
                 {
-                    Console.WriteLine("Klaida tikimybės nurodyme.", givenProbability);
+                    Console.WriteLine("Klaida tikimybės nurodyme.");
                 }
             }
 

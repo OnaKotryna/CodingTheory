@@ -108,7 +108,7 @@ namespace Coding_Theory
 
         // Vektoriaus bitų spausdinimas 
         // Įeities parametrai: vektorius, kuris bus spausdinamas
-        // Grąžinama: nieko
+        // Grąžinama: atvaizduojamas vektorius konsolėje
         static private void PrintCodeVector(int[] code)
         {
             foreach (int e in code)
